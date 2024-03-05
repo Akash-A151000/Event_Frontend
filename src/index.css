@@ -1,0 +1,123 @@
+
+
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+
+
+
+.animation-container {
+    opacity: 1;
+    transform: translateY(0);
+    animation: slideIn 0.5s ease-in-out forwards;
+  }
+  
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateY(-50px);
+    }
+  
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+
+  .slideToLeft {
+    transform: translateX(-110%);
+    transition: transform 0.5s ease-in-out;
+  }
+
+
+  @media (min-width:600px) and (max-width:768px) {
+    .slideToLeft{
+      transform: translateX(-105%);
+    }
+    
+  }
+  @media (min-width:500px) and (max-width:600px) {
+    .slideToLeft{
+      transform: translateX(-107%);
+    }
+    
+  }
+  @media (min-width:400px) and (max-width:500px) {
+    .slideToLeft{
+      transform: translateX(-108%);
+    }
+    
+  }
+  @media (max-width:300px) {
+    .slideToLeft{
+      transform: translateX(-114%);
+    }
+  }
+
+  .slideToRight{
+    transform: translateX(0);
+    transition: transform 0.5s ease-in-out;
+  }
+  
+
+ /* styles.css */
+
+ .line-after-h1 {
+  height: 2px; /* Adjust the height of the line */
+  background-color:rgb(111, 207, 151) ; /* Set the color of the line */
+  border-radius: 10px 10px 10px 10px; /* Adjust the border-radius for rounded ends */
+  width: 50px; /* Set the width of the line as per your requirement */
+  margin-top: 8px; /* Adjust the margin to separate the line from the h1 */
+}
+
+
+
+.scrollbar-container {
+  overflow-y: auto; /* Use auto so the scrollbar appears only when needed */
+}
+
+.scrollbar-container::-webkit-scrollbar {
+  width: 8px; /* Set the width of the scrollbar in WebKit browsers */
+}
+
+.scrollbar-container::-webkit-scrollbar-thumb {
+  background-color: #4f4f4f; /* Set the color of the thumb */
+  border-radius: 4px; /* Set the radius of the thumb */
+}
+
+.scrollbar-container::-webkit-scrollbar-track {
+  background-color: rgb(33, 33, 33); /* Set the color of the track */
+  border-radius: 4px; /* Set the radius of the track */
+  box-shadow: none; /* Remove the box-shadow to eliminate the arrow */
+}
+
+
+.max-lines-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.max-lines-1 {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* This will target the date input's arrow icon */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1); /* Invert color (change color) */
+  width: 1.2em; /* Adjust the icon size */
+  height: 1.2em; /* Adjust the icon size */
+ /* Align the icon properly */
+  cursor: pointer; /* Change cursor style */
+}
+
+

@@ -1,0 +1,37 @@
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+  theme: {
+    extend: {
+      fontFamily: { sans: ['Open Sans', 'sans-serif'] },
+      colors: {
+        'black-bg': '#181818',
+        'grey-form': '#212121',
+        'title-color': '#d9d9d9',
+        'label-color': '#858585',
+        'input-bg': '#131313',
+        'placeholder-color': '#727272',
+        'btn-color': '#699bf3',
+        'card-bg': 'rgb(33, 33, 33)',
+        'border-color': 'rgba(249, 249, 249, 0.08)',
+        'user-color': '#1f1f1f',
+        'add-color': 'rgb(37, 37, 37)',
+        'border-card': 'rgb(42, 46, 53)',
+        'text-color': 'rgb(178, 190, 205)',
+        'task-card-color': '#323232',
+        'task-card-border': '#424242',
+        'des-color': '#dfdfdf',
+        'title-color': '#f4f4f4',
+        'completed-color': '#66b069',
+        'incomplete-color': '#d86e61',
+        'icon-color': '#bcbec6',
+        'com-incom-color': '#cfcfcf',
+        'input-bg': 'rgb(19, 19, 19)',
+        'input-text-color': 'rgb(178, 190, 205)',
+        'create-task': 'rgb(0, 163, 255)',
+        'create-task-bg': 'rgba(0, 0, 0, 0.45)',
+      },
+    },
+  },
+  plugins: [],
+};
