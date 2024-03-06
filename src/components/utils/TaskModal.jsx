@@ -7,9 +7,11 @@ import {
   setLoading,
 } from '../../state/tasks/tasksSlice';
 import { taskSchema } from '../../schemas/task';
+import Spinner from './Spinner';
 import toast from 'react-hot-toast';
 import axios from 'axios';
 const TaskModal = ({ mode, taskToUpdate }) => {
+  const isLoading = useSelector((state) => state.task.isLoading);
   const isOpenModal = useSelector((state) => state.task.openModal);
   const token = useSelector((state) => state.auth.token);
   const [formData, setFormData] = useState({
@@ -50,15 +52,17 @@ const TaskModal = ({ mode, taskToUpdate }) => {
       );
       toast.success(res.data.message);
       dispatch(setCreateTask(res.data));
-      dispatch(setOpenModal());
       dispatch(setLoading());
+      dispatch(setOpenModal());
     } catch (error) {
+      dispatch(setLoading());
       toast.error(error.response.data.message);
     }
   };
 
   const updateTask = async () => {
     try {
+      dispatch(setLoading());
       const res = await axios.put(
         `${import.meta.env.VITE_REACT_API_URL}/user/task/${taskToUpdate._id}`,
         formData,
@@ -69,9 +73,11 @@ const TaskModal = ({ mode, taskToUpdate }) => {
         }
       );
       dispatch(setUpdatedTask(res.data));
+      dispatch(setLoading());
       toast.success(res.data.message);
       dispatch(setOpenModal());
     } catch (error) {
+      dispatch(setLoading());
       toast.error(error.response.data.message);
     }
   };
@@ -186,9 +192,17 @@ const TaskModal = ({ mode, taskToUpdate }) => {
                 <div className='flex justify-end'>
                   <button
                     type='submit'
-                    className='bg-create-task rounded-lg text-white p-2'
+                    className={`bg-create-task rounded-lg text-white ${
+                      isLoading ? 'disabled' : ''
+                    } p-2`}
                   >
-                    {mode === 'create' ? 'Create Task' : 'Update Task'}
+                    {isLoading ? (
+                      <Spinner isHome={false} />
+                    ) : mode === 'create' ? (
+                      'Create Task'
+                    ) : (
+                      'Update Task'
+                    )}
                   </button>
                 </div>
               </div>

@@ -4,8 +4,13 @@ import toast from 'react-hot-toast';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { registerSchema } from '../../schemas/auth';
+import { setLoading } from '../../state/tasks/tasksSlice';
+import { useSelector, useDispatch } from 'react-redux';
+import Spinner from '../../components/utils/Spinner';
 
 const Form = () => {
+  const isLoading = useSelector((state) => state.task.isLoading);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState({});
@@ -45,13 +50,15 @@ const Form = () => {
 
   const register = async () => {
     try {
+      dispatch(setLoading());
       const registerResponse = await axios.post(
         `${import.meta.env.VITE_REACT_API_URL}/auth/register`,
         formData
       );
       const res = await registerResponse.data;
-      toast.success(res.message);
 
+      dispatch(setLoading());
+      toast.success(res.message);
       setFormData({
         firstname: '',
         lastname: '',
@@ -60,6 +67,7 @@ const Form = () => {
       });
       navigate('/login');
     } catch (error) {
+      dispatch(setLoading());
       toast.error(error.response.data.message);
     }
   };
@@ -212,9 +220,11 @@ const Form = () => {
             <div>
               <button
                 type='submit'
-                className='bg-btn-color py-2 px-5 rounded-xl mt-2'
+                className={`bg-btn-color py-2 px-5 rounded-xl mt-2 ${
+                  isLoading ? 'disabled' : ''
+                }`}
               >
-                Submit
+                {isLoading ? <Spinner isHome={false} /> : 'Submit'}
               </button>
             </div>
           </div>

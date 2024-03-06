@@ -2,14 +2,17 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { loginSchema } from '../../schemas/auth';
 import { setLogin } from '../../state/auth/authSlice';
+import { setLoading } from '../../state/tasks/tasksSlice';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import Spinner from '../../components/utils/Spinner';
 import toast from 'react-hot-toast';
 import axios from 'axios';
 
 const Form = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const isLoading = useSelector((state) => state.task.isLoading);
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
@@ -42,13 +45,14 @@ const Form = () => {
 
   const login = async () => {
     try {
+      dispatch(setLoading());
       const loggedInResponse = await axios.post(
         `${import.meta.env.VITE_REACT_API_URL}/auth/login`,
         formData
       );
-      console.log(loggedInResponse);
       const res = await loggedInResponse.data;
-      console.log(res);
+      dispatch(setLoading());
+
       if (res) {
         dispatch(
           setLogin({
@@ -56,11 +60,10 @@ const Form = () => {
             token: res.token,
           })
         );
-        navigate('/home');
+        navigate('/home', { replace: true });
       }
     } catch (error) {
-      console.log(error);
-      console.log(error.response.data.message);
+      dispatch(setLoading());
       toast.error(error.response.data.message);
     }
   };
@@ -176,9 +179,11 @@ const Form = () => {
             <div>
               <button
                 type='submit'
-                className='bg-btn-color py-2 px-5 rounded-xl mt-2'
+                className={`bg-btn-color py-2 px-5 rounded-xl mt-2 ${
+                  isLoading ? 'disabled' : ''
+                } `}
               >
-                Submit
+                {isLoading ? <Spinner isHome={false} /> : 'Submit'}
               </button>
             </div>
           </div>
@@ -186,7 +191,7 @@ const Form = () => {
         <div>
           <p className='text-center text-title-color'>
             Don't have an account?{' '}
-            <Link to={'/register'} className='text-blue-700 underline'>
+            <Link to={'/register'} className={`text-blue-700  underline`}>
               click here
             </Link>
           </p>

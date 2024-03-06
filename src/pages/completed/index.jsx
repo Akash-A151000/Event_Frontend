@@ -27,14 +27,15 @@ const index = () => {
       dispatch(setcompletedTasks(res.data));
       dispatch(setLoading());
     } catch (error) {
-      console.log(error);
+      dispatch(setLoading());
+      toast.error(error.response.data.message);
     }
   };
   return (
     <>
       {isLoading ? (
         <div className='h-full md:col-span-7 lg:col-span-8 bg-card-bg rounded-lg border-2 border-border-color p-2 md:p-8  scrollbar-container'>
-          <Spinner />
+          <Spinner isHome={true} />
         </div>
       ) : (
         <HomeLayout title={'Completed'} tasks={completedTasks} />
